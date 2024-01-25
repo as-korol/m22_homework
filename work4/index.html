@@ -1,0 +1,37 @@
+<html>
+<body>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+
+<button onclick="getLocation()">Получить информацию о часовом поясе</button>
+
+<p id="timezone"></p>
+<p id="localDateTime"></p>
+
+<script>
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        alert("Geolocation не поддерживается данным браузером.");
+    }
+}
+
+function showPosition(position) {
+    let latitude = position.coords.latitude;
+    let longitude = position.coords.longitude;
+    
+    let apiUrl = `https://api.ipgeolocation.io/timezone?apiKey=32bcd4a6e4b548968e7afcdb682ac679&lat=${latitude}&long=${longitude}`;
+
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("timezone").innerHTML = "Ваш часовой пояс: " + data.timezone;
+            document.getElementById("localDateTime").innerHTML = "Местная дата и время: " + data.date_time_txt;
+        });
+}
+</script>
+
+</body>
+</html>

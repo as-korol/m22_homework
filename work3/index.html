@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<button onclick="getUserInfo()">Получить информацию</button>
+
+<p id="screenSize"></p>
+<p id="location"></p>
+
+<script>
+function getUserInfo() {
+    document.getElementById("screenSize").innerHTML = "Размеры экрана: " + window.innerWidth + "x" + window.innerHeight;
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+    } else {
+        document.getElementById("location").innerHTML = "Информация о местоположении недоступна";
+    }
+}
+
+function showPosition(position) {
+    let latitude = position.coords.latitude;
+    let longitude = position.coords.longitude;
+    document.getElementById("location").innerHTML = "Координаты местоположения: " + latitude + ", " + longitude;
+}
+
+function showError(error) {
+    document.getElementById("location").innerHTML = "Информация о местоположении недоступна";
+}
+</script>
+
+</body>
+</html>
